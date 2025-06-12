@@ -9,38 +9,39 @@ numdice=2
 # functions
 displayhelp () {
 	cat <<EOF
-$(basename $0) [-h] [-s N]
+$(basename $0) [-h] [-s N] [-n N]
 -h display help and exit
 -s N specify number of sides for dice, N is a number from 2 to 20, default is 6
+-n N specify the number of dice to roll, where you can roll from 1 to 5 dice, the default is 2
 EOF
 }
 
 # command line processing
 while [ $# -gt 0 ]; do
-case "$1" in
--h )
-displayhelp
-exit
-;;
--s )
-shift
-sides=$1
-if [ -n "$sides" ]; then
-if [ $sides -lt 2 -o $sides -gt 20 ]; then
-displayhelp
-exit 1
-fi
-else
-displayhelp
-exit 1
-fi
-;;
-* )
-echo "Invalid input: '$1'"
-exit 1
-;;
-esac
-shift
+	case "$1" in
+	-h )
+		displayhelp
+		exit
+		;;
+	-s )
+		shift
+		sides=$1
+		if [ -n "$sides" ]; then
+			if [ $sides -lt 2 -o $sides -gt 20 ]; then
+				displayhelp
+				exit 1
+			fi
+		else
+			displayhelp
+			exit 1
+		fi
+		;;
+	* )
+		echo "Invalid input: '$1'"
+		exit 1
+		;;
+	esac
+	shift
 done
 
 # main script functionality - rolling the dice!
